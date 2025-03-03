@@ -17,17 +17,13 @@ export const useBooksList = defineStore('BooksList', {
                 return (this.booksList );
         },
         countBooks() {
+            console.log(this.booksList);
             return (this.booksList.length);
         },
-        authorName() {
-            console.log(this.booksList);
-           for (let elem of this.booksList) {
-            if (elem.author_name !==null || elem.author_name !== undefined) {
-                return String(elem.author_name)
-            }
-           }
-            
+    },
+    actions: {
+        authorName(str) {
+            return String(str);
         }
-   
     }
 })
