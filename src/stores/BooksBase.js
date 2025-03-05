@@ -3,7 +3,8 @@ import axios from 'axios';
 
 export const useBooksList = defineStore('BooksList', {
     state: () => ({
-        booksList: []
+        booksList: [],
+        loader: false
     }),
     getters: {
         goData() {
@@ -13,11 +14,10 @@ export const useBooksList = defineStore('BooksList', {
                 .catch(error => console.log(error.message))
                 for (let elem of this.booksList) {
                     elem.isReader = false;
-                }
+                }           
                 return (this.booksList );
         },
         countBooks() {
-            console.log(this.booksList);
             return (this.booksList.length);
         },
     },
