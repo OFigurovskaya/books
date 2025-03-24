@@ -1,5 +1,6 @@
 <script setup>
 import { useBooksList } from '@/stores/BooksBase';
+import ButtonsAddDel from './ButtonsAddDel.vue';
 const booksList = useBooksList();
 const props = defineProps({
     book: {
@@ -23,7 +24,7 @@ const props = defineProps({
             <ul class="list-group list-group-flush" v-for="(lang, index) in book.language" :key="index">
                 <li class="list-group-item">{{ lang }}</li>
             </ul>
-            <a href="#" class="btn btn-primary">Перейти куда-нибудь</a>
         </div>
+        <ButtonsAddDel />
     </div>
 </template>
