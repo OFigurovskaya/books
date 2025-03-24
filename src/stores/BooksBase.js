@@ -5,6 +5,9 @@ export const useBooksList = defineStore('booksList', () => {
     const booksList = ref([]);
     const loader = ref(false);
     const activeTab = ref(1);
+    const favoriteBooks = ref([]);
+
+    //Запрос общего списка книг
     const goData = async () => {
         loader.value = true;
         try {
@@ -14,26 +17,47 @@ export const useBooksList = defineStore('booksList', () => {
             for(let elem of booksList.value) {
                 elem.isWatched = true;
             }
-            console.log(booksList.value);
         } catch(error) {
             console.error("Error fetching photos:", error);
         } finally {
             loader.value = false;
         }
     };
+
+    //Количество книг (весь список)
     const countBooks = () => {
         return (booksList.value.length);
     };
+
+    //Получение имени автора
     const authorName = (str) => {
         return String(str);
     };
+
+    //Получение списка избранных книг
     const filterBooks = () => {
-        return booksList.value.filter((el) => el.isWatched === true)
+        favoriteBooks.value = booksList.value.filter((el) => el.isWatched === false)
+        return favoriteBooks.value
     }
+
+    //Количество избранных книг 
+    const countBooksFilter = () => {
+        return (filterBooks().length);
+    }  
+
     onMounted(() => {
         goData()
     })
+
+    //добавление книги в избранное
+    const favoriteBooksAdd = (id) => {
+        for (let elem of booksList.value) {
+            console.log(elem['8238738']);
+        }
+        console.log(booksList.value['8238738']);
+    }
+
     return {
-        booksList, loader, goData, countBooks, authorName, activeTab, filterBooks
+        booksList, loader, goData, countBooks, authorName, activeTab, filterBooks, countBooksFilter, favoriteBooks, favoriteBooksAdd
     }
 })

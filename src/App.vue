@@ -22,8 +22,8 @@ const booksList = useBooksList();
       <Books  v-for="book of booksList.booksList" :key="book.cover_i" :book="book" />
       </div>
       <div>
-        <h5>Количество избранных книг: {{ booksList.countBooks() }}</h5>
-      <Books  v-for="book of booksList.filterBooks()" :key="book.cover_i" :book="book" />
+        <h5>Количество избранных книг: {{ booksList.countBooksFilter() }}</h5>
+      <Books  v-for="book of booksList.favoriteBooks" :key="book.cover_i" :book="book" />
       </div>
     </div>
     <div v-if="booksList.activeTab === 2">Block Search</div>

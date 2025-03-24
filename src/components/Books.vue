@@ -24,7 +24,8 @@ const props = defineProps({
             <ul class="list-group list-group-flush" v-for="(lang, index) in book.language" :key="index">
                 <li class="list-group-item">{{ lang }}</li>
             </ul>
+            <ButtonsAddDel :id="book.cover_i"/>
         </div>
-        <ButtonsAddDel />
+        
     </div>
 </template>
