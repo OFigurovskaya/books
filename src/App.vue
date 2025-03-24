@@ -11,14 +11,20 @@ const booksList = useBooksList();
     <header class="header mb-3" id="ancor2">
       <h2 class="h2 text-info text-center">My favorite books</h2>
       <div class="tabs d-flex justify-content-center mb-3 gap-4">
-        <button class="btn btn-primary">Избранные книги</button>
-        <button class="btn btn-primary">Поиск</button>
+        <button :class="['btn', 'btn_lg',  'btn-primary ', { 'btn-success': booksList.activeTab === 1 }]">Избранные книги</button>
+        <button :class="['btn', 'btn_lg', 'btn-primary ', { 'btn-success': booksList.activeTab === 2 }]">Поиск</button>
       </div>
     </header>
     <Loader v-if="booksList.loader"/>
     <div v-if="booksList.activeTab === 1">
-      <h5>Количество книг: {{ booksList.countBooks() }}</h5>
+      <div>
+        <h5>Количество всех книг: {{ booksList.countBooks() }}</h5>
       <Books  v-for="book of booksList.booksList" :key="book.cover_i" :book="book" />
+      </div>
+      <div>
+        <h5>Количество избранных книг: {{ booksList.countBooks() }}</h5>
+      <Books  v-for="book of booksList.filterBooks()" :key="book.cover_i" :book="book" />
+      </div>
     </div>
     <div v-if="booksList.activeTab === 2">Block Search</div>
   </main>
