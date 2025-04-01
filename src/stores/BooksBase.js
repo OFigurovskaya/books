@@ -15,7 +15,7 @@ export const useBooksList = defineStore('booksList', () => {
             const json = await response.json();
             booksList.value = json.docs;
             for (let elem of booksList.value) {
-                elem.isWatched = true;
+                elem.isFavorite = false;
             }
         } catch (error) {
             console.error("Error fetching photos:", error);
@@ -36,7 +36,7 @@ export const useBooksList = defineStore('booksList', () => {
 
     //Получение списка избранных книг
     const filterBooks = () => {
-        favoriteBooks.value = booksList.value.filter((el) => el.isWatched === false)
+        favoriteBooks.value = booksList.value.filter((el) => el.isFavorite === true)
         return favoriteBooks.value
     }
 
@@ -45,36 +45,37 @@ export const useBooksList = defineStore('booksList', () => {
         return (filterBooks().length);
     }
 
-    onMounted(() => {
-        goData();       
-    })
+
 
     //добавление книги в избранное
-    const favoriteBooksAdd = (id) => {
+    const favoriteBooksToogle = (id) => {
         const cover_i = id;
-        const bookToAdd = booksList.value.find(book => book.cover_i === id);
-        if (bookToAdd && !favoriteBooks.value.includes(bookToAdd)) {
-            favoriteBooks.value.push(bookToAdd);
-            bookToAdd.isWatched = false;
-        }
+        const idx = booksList.value.findIndex((el) => el.cover_i === cover_i);
+        booksList.value[idx].isFavorite = !booksList.value[idx].isFavorite;
         console.log(favoriteBooks.value);
+    };
+
+
+
+    //удаление книги из избранного (не работает)
+    const favoriteBooksDel = (id) => {
+        const cover_i = id;
+        favoriteBooks.value = favoriteBooks.value.filter(book => book.cover_i !== id);
         return (favoriteBooks.value);
     };
 
-//удаление книги из избранного (не работает)
-    const favoriteBooksDel = (id) => {
-        const cover_i = id;
-        favoriteBooks.value = favoriteBooks.value.filter(book => book.cover_i !== id); 
-        console.log(favoriteBooks.value);
-        return (favoriteBooks.value);
-    };
 
     //переключение activeTab
     const toggleActiveTab = (id) => {
         activeTab.value = id;
     }
 
+    onMounted(() => {
+        goData();
+
+    })
+
     return {
-        booksList, loader, goData, countBooks, authorName, activeTab, filterBooks, countBooksFilter, favoriteBooks, favoriteBooksAdd, favoriteBooksDel, toggleActiveTab
+        booksList, loader, goData, countBooks, authorName, activeTab, filterBooks, countBooksFilter, favoriteBooks, favoriteBooksToogle, favoriteBooksDel, toggleActiveTab
     }
 })
