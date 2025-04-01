@@ -1,6 +1,7 @@
 <script setup>
 import { useBooksList } from '@/stores/BooksBase';
-import ButtonsAddDel from './ButtonsAddDel.vue';
+import { ref } from 'vue';
+
 const booksList = useBooksList();
 const props = defineProps({
     book: {
@@ -9,7 +10,7 @@ const props = defineProps({
         default: () => { }
     }
 });
-    
+
 
 </script>
 
@@ -24,8 +25,13 @@ const props = defineProps({
             <ul class="list-group list-group-flush" v-for="(lang, index) in book.language" :key="index">
                 <li class="list-group-item">{{ lang }}</li>
             </ul>
-            <ButtonsAddDel :id="book.cover_i"/>
+            <div class="buttonsAddDel d-flex justify-content-center mb-3 gap-4">
+                <button class="btn btn-success" :id="book.cover_i" v-show="!book.isFavorite"
+                    @click="booksList.favoriteBooksToogle(book.cover_i)"> Добавить в избранное</button>
+                <button class="btn btn-success" :id="book.cover_i" v-show="book.isFavorite"
+                    @click="booksList.favoriteBooksToogle(book.cover_i)"> Удалить из избранного</button>
+            </div>
         </div>
-        
+
     </div>
 </template>
