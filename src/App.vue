@@ -15,7 +15,7 @@ const toggleTab = (id) => {
     <header class="header mb-3" id="ancor2">
       <h2 class="h2 text-info text-center">My favorite books</h2>
       <div class="tabs d-flex justify-content-center mb-3 gap-4">
-        <button :class="['btn', 'btn_lg',  'btn-primary ', { 'btn-success': booksList.activeTab === 1 }]" @click="toggleTab(1)">Избранные книги</button>
+        <button :class="['btn', 'btn_lg',  'btn-primary ', { 'btn-success': booksList.activeTab === 1 }]" @click="toggleTab(1)">Все книги</button>
         <button :class="['btn', 'btn_lg', 'btn-primary ', { 'btn-success': booksList.activeTab === 2 }]" @click="toggleTab(2)">Поиск</button>
       </div>
     </header>
