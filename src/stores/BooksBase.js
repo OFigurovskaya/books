@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 export const useBooksList = defineStore('booksList', () => {
     const booksList = ref([]);
@@ -36,9 +36,23 @@ export const useBooksList = defineStore('booksList', () => {
 
     //Получение списка избранных книг
     const filterBooks = () => {
-        favoriteBooks.value = booksList.value.filter((el) => el.isFavorite === true)
+        const booksInLocalStorage = localStorage.getItem('favoriteBooks');
+        // Проверка наличия данных в LocalStorage
+        if (booksInLocalStorage !== null) {
+            try {
+                const parsedBooks = JSON.parse(booksInLocalStorage);
+                // Дополнительная проверка, что загружен массив
+                if (Array.isArray(parsedBooks)) {
+                    favoriteBooks.value = parsedBooks;
+                }
+            } catch (error) {
+                console.error('Ошибка при загрузке данных из LocalStorage:', error);
+            }
+        } 
         return favoriteBooks.value
     }
+
+
 
     //Количество избранных книг 
     const countBooksFilter = () => {
@@ -46,23 +60,28 @@ export const useBooksList = defineStore('booksList', () => {
     }
 
 
-
     //добавление книги в избранное
     const favoriteBooksToogle = (id) => {
-        const cover_i = id;
-        const idx = booksList.value.findIndex((el) => el.cover_i === cover_i);
-        booksList.value[idx].isFavorite = !booksList.value[idx].isFavorite;
-        console.log(favoriteBooks.value);
+        const idx = booksList.value.findIndex((el) => el.cover_i === id);
+        // Проверяем, существует ли книга
+        if (idx !== -1) {
+            // Переключаем состояние isFavorite
+            booksList.value[idx].isFavorite = !booksList.value[idx].isFavorite;
+            // Обновляем favoriteBooks
+            if (booksList.value[idx].isFavorite) {
+                // Если книга стала избранной, добавляем её в favoriteBooks
+                favoriteBooks.value = [...favoriteBooks.value, booksList.value[idx]];
+            } else {
+                // Если книга больше не избранная, удаляем её из favoriteBooks
+                favoriteBooks.value = favoriteBooks.value.filter(book => book.cover_i !== id);
+            }
+        }
     };
 
 
-
-    //удаление книги из избранного (не работает)
-    const favoriteBooksDel = (id) => {
-        const cover_i = id;
-        favoriteBooks.value = favoriteBooks.value.filter(book => book.cover_i !== id);
-        return (favoriteBooks.value);
-    };
+    watch(favoriteBooks, (state) => {
+        localStorage.setItem('favoriteBooks', JSON.stringify(state));
+    }, { deep: true });
 
 
     //переключение activeTab
@@ -70,12 +89,31 @@ export const useBooksList = defineStore('booksList', () => {
         activeTab.value = id;
     }
 
-    onMounted(() => {
-        goData();
+    onMounted(async () => {
+        await goData();
+    
+        // Синхронизация состояния isFavorite
+        favoriteBooks.value.forEach(book => {
+            const idx = booksList.value.findIndex(el => el.cover_i === book.cover_i);
+            if (idx !== -1) {
+                booksList.value[idx].isFavorite = true;
+            }
+        });
+    });
 
-    })
+    
 
     return {
-        booksList, loader, goData, countBooks, authorName, activeTab, filterBooks, countBooksFilter, favoriteBooks, favoriteBooksToogle, favoriteBooksDel, toggleActiveTab
-    }
+        booksList,
+        loader,
+        goData,
+        countBooks,
+        authorName,
+        activeTab,
+        filterBooks,
+        countBooksFilter,
+        favoriteBooks,
+        favoriteBooksToogle,
+        toggleActiveTab,
+    };
 })
