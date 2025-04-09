@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { ref, onMounted } from 'vue';
 
 export const useButtonsGo = defineStore('buttonsGo', () => {
     const handleScroll = (id) => {
