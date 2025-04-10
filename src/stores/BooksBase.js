@@ -48,7 +48,7 @@ export const useBooksList = defineStore('booksList', () => {
             } catch (error) {
                 console.error('Ошибка при загрузке данных из LocalStorage:', error);
             }
-        } 
+        }
         return favoriteBooks.value
     }
 
@@ -76,6 +76,9 @@ export const useBooksList = defineStore('booksList', () => {
                 favoriteBooks.value = favoriteBooks.value.filter(book => book.cover_i !== id);
             }
         }
+        setTimeout(() => {
+            activeTab.value = 1;
+        }, 1000)
     };
 
 
@@ -91,7 +94,7 @@ export const useBooksList = defineStore('booksList', () => {
 
     onMounted(async () => {
         await goData();
-    
+
         // Синхронизация состояния isFavorite
         favoriteBooks.value.forEach(book => {
             const idx = booksList.value.findIndex(el => el.cover_i === book.cover_i);
@@ -101,7 +104,7 @@ export const useBooksList = defineStore('booksList', () => {
         });
     });
 
-    
+
 
     return {
         booksList,
