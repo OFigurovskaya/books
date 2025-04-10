@@ -1,5 +1,7 @@
 Пэт-проект библиотка на Vue 3
+
 Деплой: https://ofigurovskaya.github.io/books/
+
 Данные загружаются с https://openlibrary.org/ (бесплатный API для получения данных (книги)).
 
 Функционал:
