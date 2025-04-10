@@ -1,29 +1,17 @@
-# books
+Пэт-проект библиотка на Vue 3
+Деплой: https://ofigurovskaya.github.io/books/
+Данные загружаются с https://openlibrary.org/ (бесплатный API для получения данных (книги)).
 
-This template should help get you started developing with Vue 3 in Vite.
+Функционал:
 
-## Recommended IDE Setup
+При загрузке страницы уходит запрос на сервер за списком книг. 
+Книги фильтруются по избанным. При добавлении книги в избранное она отображается в соответствующем разделе и меняется количество. Также при удалении из избранного. Данные пользователя хранятся в local Storage.
+Во вкладке "Поиск" осуществлен поиск по имени (также по части имени). При отсутсивии искомой книги об этом появляется соответсвующее сообщение, которое пропадает при введении корректного запроса. Если поле поиска пустое, то при отправке формы будут отображены все книги.  Поддерживается  отпрака формы при нажатии  Enter и при нажатии кнопки "Найти".  Кнопка 'темная/светлая тема' позволяет переключаться со светлой темы на темную и обратно. Шапка прилипает к верхней части блока и видна при прокрутке. Кнопки "в избранные книги" и "наверх" позволяют быстро переходить от одного пункта к другому.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Стек
 
-## Customize configuration
+JavaScript, Vue3, pinia, bootstrap, vite
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Установка
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+Для запуска на локальной машине необходимо: Установить npm зависимости: npm install. Далее - npm run dev
