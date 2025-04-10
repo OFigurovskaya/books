@@ -12,16 +12,20 @@ const toggleTab = (id) => {
   booksList.toggleActiveTab(id)
 };
 
+const countFavoriteBooks = () => {
+ return  booksList.countBooksFilter()
+}
+
 </script>
 
 <template>
   <main class="container-fluid ligth thene">
     <header class="header mb-3" id="ancor2">
       <ChangeThemeBtn />
-      <h2 class="h2 text-info text-center" >My favorite books</h2>
+      <h2 class="h1 text-info text-center" >My favorite books</h2>
       <div class="tabs d-flex justify-content-center mb-3 gap-4 ">
-        <button :class="['btn', 'btn_lg',  'btn-primary ', { 'btn-success': booksList.activeTab === 1 }]" @click="toggleTab(1)">Все книги</button>
-        <button :class="['btn', 'btn_lg', 'btn-primary ', { 'btn-success': booksList.activeTab === 2 }]" @click="toggleTab(2)">Поиск</button>
+        <button :class="['btn', 'btn_lg',  'btn-secondary', { 'btn-success': booksList.activeTab === 1 }]" @click="toggleTab(1)">Все книги</button>
+        <button :class="['btn', 'btn_lg', 'btn-secondary', { 'btn-success': booksList.activeTab === 2 }]" @click="toggleTab(2)">Поиск</button>
       </div>
     </header>
     <Loader v-if="booksList.loader"/>
@@ -30,10 +34,11 @@ const toggleTab = (id) => {
     <div v-if="booksList.activeTab === 1" id="ancorUp">
       <div>
         <h5 class="text-info">Количество всех книг: {{ booksList.countBooks() }}</h5>
+        <h5 class="text-info">Количество избранных книг: {{ countFavoriteBooks() }}</h5>
       <Books  v-for="book of booksList.booksList" :key="book.cover_i" :book="book" />
       </div>
       <div id="ancor" >
-        <h5 class="text-info">Количество избранных книг: {{ booksList.countBooksFilter() }}</h5>
+        <h5 class="text-success h2 text-center">Избранные книги:</h5>
       <Books  v-for="book of booksList.favoriteBooks" :key="book.cover_i" :book="book" />
       </div>
     </div>

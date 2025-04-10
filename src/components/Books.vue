@@ -28,7 +28,7 @@ const props = defineProps({
             <div class="buttonsAddDel d-flex justify-content-center mb-3 gap-4">
                 <button class="btn btn-success" :id="book.cover_i" v-show="!book.isFavorite"
                     @click="booksList.favoriteBooksToogle(book.cover_i)"> Добавить в избранное</button>
-                <button class="btn btn-success" :id="book.cover_i" v-show="book.isFavorite"
+                <button class="btn btn-danger" :id="book.cover_i" v-show="book.isFavorite"
                     @click="booksList.favoriteBooksToogle(book.cover_i)"> Удалить из избранного</button>
             </div>
         </div>

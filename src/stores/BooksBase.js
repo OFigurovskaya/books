@@ -52,8 +52,6 @@ export const useBooksList = defineStore('booksList', () => {
         return favoriteBooks.value
     }
 
-
-
     //Количество избранных книг 
     const countBooksFilter = () => {
         return (filterBooks().length);
@@ -81,7 +79,7 @@ export const useBooksList = defineStore('booksList', () => {
         }, 1000)
     };
 
-
+    //наблюдатель за изменением списка избранных книг
     watch(favoriteBooks, (state) => {
         localStorage.setItem('favoriteBooks', JSON.stringify(state));
     }, { deep: true });

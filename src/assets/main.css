@@ -19,6 +19,11 @@ a,
   background-color: #000;
 }
 
+.dark-card {
+  background-color: #000;
+  color: #fff
+}
+
 .ligth {
   background-color: #fff;
 }
